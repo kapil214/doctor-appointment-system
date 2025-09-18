@@ -1,0 +1,89 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1>Admin Dashboard</h1>
+    
+    <!-- Section to Add a New Doctor -->
+    <section>
+        <h2>Add a New Doctor</h2>
+        <form action="{{ url_for('add_doctor') }}" method="post">
+            <div class="form-group">
+                <label for="username">Doctor's Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Temporary Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="full_name">Full Name</label>
+                <input type="text" id="full_name" name="full_name" required>
+            </div>
+            <div class="form-group">
+                <label for="specialization">Specialization</label>
+                <input type="text" id="specialization" name="specialization" required>
+            </div>
+            <button type="submit" class="btn">Add Doctor</button>
+        </form>
+    </section>
+
+    <!-- Section to View All Doctors -->
+    <section>
+        <h2>All Doctors</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Full Name</th>
+                    <th>Specialization</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for doctor in doctors %}
+                <tr>
+                    <td>{{ doctor[0] }}</td>
+                    <td>{{ doctor[1] }}</td>
+                    <td>{{ doctor[2] }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="3">No doctors found in the system.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Section to View All Appointments -->
+    <section>
+        <h2>All System Appointments</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Patient</th>
+                    <th>Doctor</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appt in appointments %}
+                <tr>
+                    <td>{{ appt[0] }}</td>
+                    <td>{{ appt[1] }}</td>
+                    <td>{{ appt[2] }}</td>
+                    <td>{{ appt[3] }}</td>
+                    <td>{{ appt[4] }}</td>
+                    <td>{{ appt[5].capitalize() }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6">No appointments found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+{% endblock %}

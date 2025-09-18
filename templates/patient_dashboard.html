@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1>My Dashboard</h1>
+
+    <!-- Section to Book a New Appointment -->
+    <section>
+        <h2>Book a New Appointment</h2>
+        <form action="{{ url_for('book_appointment') }}" method="post">
+            <div class="form-group">
+                <label for="doctor_id">Select Doctor</label>
+                <select id="doctor_id" name="doctor_id" required>
+                    {% for doctor in doctors %}
+                        <option value="{{ doctor[0] }}">{{ doctor[1] }} - {{ doctor[2] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="date">Select Date</label>
+                <input type="date" id="date" name="date" required>
+            </div>
+            <div class="form-group">
+                <label for="time">Select Time</label>
+                <input type="time" id="time" name="time" required>
+            </div>
+            <button type="submit" class="btn">Book Now</button>
+        </form>
+    </section>
+    
+    <!-- Section to View My Appointments -->
+    <section>
+        <h2>My Appointments</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Doctor</th>
+                    <th>Specialization</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appt in appointments %}
+                <tr>
+                    <td>{{ appt[0] }}</td>
+                    <td>{{ appt[1] }}</td>
+                    <td>{{ appt[2] }}</td>
+                    <td>{{ appt[3] }}</td>
+                    <td>{{ appt[4] }}</td>
+                    <td>{{ appt[5].capitalize() }}</td>
+                    <td>
+                        {% if appt[5] == 'booked' %}
+                        <a href="{{ url_for('cancel_appointment', appointment_id=appt[0]) }}" class="btn btn-danger">Cancel</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="7">You have no appointments booked.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+{% endblock %}
