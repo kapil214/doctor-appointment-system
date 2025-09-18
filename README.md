@@ -138,7 +138,6 @@ Run the Flask Application
 
 flask --app app run
 
-The application will be available at http://127.0.0.1:5000 in your web browser.
 
 Future Enhancements
 This project provides a solid foundation that can be extended with additional features:
